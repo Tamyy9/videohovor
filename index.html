@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Room</title>
+    <style>
+        #videoContainer {
+            display: none;
+            margin-top: 20px;
+        }
+        video {
+            width: 100%;
+            max-width: 600px;
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Video Room</h1>
+    <button id="joinButton">Join Room</button>
+    <div id="videoContainer">
+        <video id="localVideo" autoplay playsinline></video>
+    </div>
+
+    <script>
+        // Funkcia, ktorá sa spustí po kliknutí na tlačidlo
+        document.getElementById('joinButton').addEventListener('click', async () => {
+            // Zobrazí video kontajner
+            document.getElementById('videoContainer').style.display = 'block';
+
+            try {
+                // Požiada o prístup k videu a audiu
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                
+                // Pripojí stream k video elementu
+                const videoElement = document.getElementById('localVideo');
+                videoElement.srcObject = stream;
+            } catch (error) {
+                console.error("Error accessing media devices:", error);
+            }
+        });
+    </script>
+</body>
+</html>
